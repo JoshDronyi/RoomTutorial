@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RoomTutorial</string>
+    <string name="first">First Name</string>
+    <string name="last">Last Name</string>
+</resources>
