@@ -29,4 +29,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         getAllUsers()
     }
 
+    fun removeUser(user:User) = viewModelScope.launch(Dispatchers.IO) {
+        userRepo.deleteSpecificUser(user)
+    }
+
+
+
 }

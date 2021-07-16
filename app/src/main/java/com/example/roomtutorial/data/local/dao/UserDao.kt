@@ -10,16 +10,19 @@ interface UserDao {
     @Query("SELECT * FROM user_table")
     suspend fun getAllUsers(): List<User>
 
-    //Delete
+    //Delete specific user
     @Query("DELETE  FROM user_table")
     suspend fun deleteAllUsers(): Unit
 
+    @Delete
+    suspend fun deleteUser(user: User)
+
     //GetByName
     @Query("SELECT * FROM user_table WHERE user_table.first_name = :first AND user_table.last_name = :last")
-    suspend fun getUserByName(first:String, last:String): User
+    suspend fun getUserByName(first: String, last: String): User
 
     //Insert user
-    @Insert(onConflict = OnConflictStrategy.REPLACE )
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
 
 }

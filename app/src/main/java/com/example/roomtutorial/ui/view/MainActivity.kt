@@ -1,6 +1,7 @@
 package com.example.roomtutorial.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,20 +29,29 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider.AndroidViewModelFactory(this.application)
         ).get(MainViewModel::class.java)
 
+        userAdapter = UserAdapter() { user ->
+            //Remove the user
+            mainViewModel.removeUser(user)
+            //get the new list of Users
+            mainViewModel.getAllUsers()
+        } //Lambda passed into the click listener in the UserViewHolder
+
         setUpObservables()
 
+        setUpBinding()
+    }
+    private fun setUpBinding(){
         with(binding) {
             rvUsers.layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-           userAdapter = UserAdapter()
             rvUsers.adapter = userAdapter
 
             add.setOnClickListener {
-                val user = User(firstName =firstName.text.toString(), lastName = lastName.text.toString())
+                val user =
+                    User(firstName = firstName.text.toString(), lastName = lastName.text.toString())
                 mainViewModel.insertUser(user)
             }
         }
-
     }
 
     private fun setUpObservables() {
